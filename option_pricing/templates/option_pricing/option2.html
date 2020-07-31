@@ -1,0 +1,71 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <h5>First Query</h5>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+    
+                <form method="get">
+                    <div class="form-group">
+                        {{option_filter.form.as_p}}
+                    </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+              </form>
+    
+            </div>
+        </div>
+        
+    </div>
+    <br>
+    <div class="card card-body">
+        
+        <table class="table table-sm">
+            <tr>
+                <th>Date</th>
+                <th>Asset</th>
+                <th>Option Type</th>
+                <th>Strike</th>
+                <th>Expiration Month</th>
+                <th>Expiration Year</th>
+                <th>Closing Price</th>
+                <th>Change</th>
+                <th>Volume</th>
+                <th>Max</th>
+                <th>Min</th>
+                <th>Trades</th>
+                <th>Fixing Price</th>
+                <th>Open Interest</th>
+            </tr>
+            
+            {% for option in option_filter.qs %}
+                <tr>
+                    <td>{{option.date|date:"SHORT_DATE_FORMAT"}}</td>
+                    <td>{{option.asset}}</td>
+                    <td>{{option.optiontype}}</td>
+                    <td>{{option.strike}}</td>
+                    <td>{{option.expmonthyear|date:"M"}}</td>
+                    <td>{{option.expmonthyear|date:"Y"}}</td>
+                    <td>{{option.closing_price}}</td>
+                    <td>{{option.change}}</td>
+                    <td>{{option.volume}}</td>
+                    <td>{{option.max}}</td>
+                    <td>{{option.min}}</td>
+                    <td>{{option.trades}}</td>
+                    <td>{{option.fixing_price}}</td>
+                    <td>{{option.open_interest}}</td>
+
+                </tr>
+            {% endfor %}
+            
+    
+        </table>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

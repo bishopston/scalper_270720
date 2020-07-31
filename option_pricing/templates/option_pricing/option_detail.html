@@ -1,0 +1,53 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <div class="card card-body">
+        
+        <table class="table table-sm">
+            <tr>
+                <th>Date</th>
+                <th>Asset</th>
+                <th>Option Type</th>
+                <th>Strike</th>
+                <th>Expiration Month</th>
+                <th>Expiration Year</th>
+                <th>Closing Price</th>
+                <th>Change</th>
+                <th>Volume</th>
+                <th>Max</th>
+                <th>Min</th>
+                <th>Trades</th>
+                <th>Fixing Price</th>
+                <th>Open Interest</th>
+            </tr>
+            
+
+            <tr>
+                <td>{{option_detail.date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td>{{option_detail.asset}}</td>
+                <td>{{option_detail.optiontype}}</td>
+                <td>{{option_detail.strike}}</td>
+                <td>{{option_detail.expmonthyear|date:"M"}}</td>
+                <td>{{option_detail.expmonthyear|date:"Y"}}</td>
+                <td>{{option_detail.closing_price}}</td>
+                <td>{{option_detail.change}}</td>
+                <td>{{option_detail.volume}}</td>
+                <td>{{option_detail.max}}</td>
+                <td>{{option_detail.min}}</td>
+                <td>{{option_detail.trades}}</td>
+                <td>{{option_detail.fixing_price}}</td>
+                <td>{{option_detail.open_interest}}</td>
+
+            </tr>
+
+            
+    
+        </table>
+
+    </div>
+</div>
+
+
+{% endblock %}

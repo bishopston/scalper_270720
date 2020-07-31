@@ -1,0 +1,28 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <div class="card card-body">
+        
+        <div class="row mx-5">
+            <ul>
+                {% for optionftse in option_ftse_strikespan %}
+                  <li>
+                    {{ optionftse.strike }}
+                    {{ optionftse.date }}
+                    {{ optionftse.closing_price }}
+                    {{ optionftse.expmonthyear|date:"M" }}
+                    {{ optionftse.expmonthyear|date:"Y" }}
+                  </li>
+                  <hr />
+                {% endfor %}
+            </ul>
+        </div>       
+    
+        
+    </div>
+</div>
+
+
+{% endblock %}

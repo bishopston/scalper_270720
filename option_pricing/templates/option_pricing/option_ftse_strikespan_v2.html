@@ -1,0 +1,93 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+	<div class="col-md-10">
+		<div class="card card-body">
+			
+			<div class="row mx-5">
+				<ul>
+					{% for optionftse in option_ftse_strikespan %}
+					  <li>
+						{{ optionftse.strike }}
+						{{ optionftse.date }}
+						{{ optionftse.closing_price }}
+						{{ optionftse.expmonthyear|date:"M" }}
+						{{ optionftse.expmonthyear|date:"Y" }}
+					  </li>
+					  <hr />
+					{% endfor %}
+				</ul>
+			</div>
+
+				
+		
+			
+
+		</div>
+	</div>
+
+	<div class="container">
+		<canvas id="myChart"></canvas>
+	</div>
+
+  <script>
+    var myChart = document.getElementById('myChart').getContext('2d');
+
+    // Global Options
+    Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    Chart.defaults.global.defaultFontColor = '#777';
+
+    var massPopChart = new Chart(myChart, {
+      type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:[{% for optionftse in option_ftse_strikespan %}'{{ optionftse.date }}',{% endfor %}],
+        datasets:[{
+          label:'Option Price',
+          data:[{% for optionftse in option_ftse_strikespan %}{{ optionftse.closing_price }},{% endfor %}],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 99, 132, 0.6)'
+          ],
+          borderWidth:1,
+          borderColor:'#777',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Largest Cities In Massachusetts',
+          fontSize:25
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+  </script>
+
+{% endblock %}
