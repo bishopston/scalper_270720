@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from option_pricing.views import OptionChartView
+
+
 
 
 urlpatterns = [
@@ -10,5 +11,9 @@ urlpatterns = [
     path('<int:pk>/', views.OptionDetailView, name='option_detail'),
     path('optionftse/', views.OptionFtseView, name='option_ftse'),
     path('optionftse/<slug:optionsymbol>/', views.OptionFtseViewDetail, name='option_ftse_strikespan'),
-    path('chartjstest/', OptionChartView.as_view(), name='option_chart')
+    path('zingchart/<str:stock>/', views.zingchartView, name="zingchart"),
+    path('zingchart/bar/<slug:tradesymbol>/', views.zingchartView1, name="zingchart1"),
+    path('zingchart/chart/<str:obj>/', views.zingchartView2, name="zingchart2"),
+    path('jschart/<str:optionsymbol>/', views.JSChartView, name='js_chart'),
+    path('jschart/chart/<str:tradesymbol>/', views.JSChartView1, name="js_chart1"),
 ]

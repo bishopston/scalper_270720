@@ -1,0 +1,60 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<div class='col-sm-6'>
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+<script>
+    var objId = "{{trade_symbol}}"
+    var dataURL = `/jschart/chart/${objId}/`
+    var defaultData = [];
+    var labels = [];
+
+    $.ajax({
+        method: "GET",
+        url: dataURL,
+        success: function(data){
+            labels = data.labels
+            defaultData = data.data
+            setChart()
+        },
+        error: function(error_data){
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    function setChart(){
+        var ctx = document.getElementById("myChart");
+
+
+        
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Option Price',
+                data: defaultData,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    })
+    };
+</script>
+
+{% endblock %}

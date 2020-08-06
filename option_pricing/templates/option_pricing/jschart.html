@@ -1,0 +1,68 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<div class='col-sm-6'>
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+<script>
+    var objId = "{{trade_symbol}}"
+    var dataURL = `/jschart/chart/${objId}/`
+
+    var state ={	
+		'items':[],
+		'values':[],
+	}
+
+    $.ajax({
+        method: "GET",
+        url: dataURL,
+        success: function(response){
+            for (var i in response){
+                var key = Object.keys(response[i])[0]
+				var key_stripped = key.replace('"', '')
+				var key_stripped_stripped = key_stripped.replace('"', '')
+				var value = Object.values(response[i])[0]
+            
+				state.items.push(key_stripped_stripped)
+				state.values.push(value)
+            }
+            setChart()
+        },
+        error: function(error_data){
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+
+    function setChart(){
+        var ctx = document.getElementById("myChart");
+       
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: state.items,
+            datasets: [{
+                label: objId,
+                data: state.values,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    })
+    };
+</script>
+
+{% endblock %}

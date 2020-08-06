@@ -2,15 +2,18 @@
 
 {% block content %}
 
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <div class="col-md-10">
     <div class="card card-body">
         
         <div class="row mx-5">
             <ul>
-                {% for optionftse in option_ftse_strikespan %}
+                {% for optionftse in option_ftse_strikespan|slice:":5" %}
                   <li>
                     {{ optionftse.strike }}
-                    {{ optionftse.date }}
+                    {{ optionftse.date|date:"SHORT_DATE_FORMAT" }}
                     {{ optionftse.closing_price }}
                     {{ optionftse.expmonthyear|date:"M" }}
                     {{ optionftse.expmonthyear|date:"Y" }}
@@ -23,6 +26,59 @@
         
     </div>
 </div>
+<div id="myChart"></div>
 
+<script>
+
+var state ={	
+		'items':[],
+		'values':[],
+	}
+
+	var objId = "{{trade_symbol}}"
+
+	var dataURL = `/zingchart/bar/${objId}/`
+	$.ajax({
+		method:'GET',
+		url:dataURL,
+		success:function(response){
+			console.log('RESPONSE:', response)
+			for (var i in response){
+
+				var key = Object.keys(response[i])[0]
+				var key_stripped = key.replace('"', '')
+				var key_stripped_stripped = key_stripped.replace('"', '')
+				var value = Object.values(response[i])[0]
+
+				state.items.push(key_stripped_stripped)
+				state.values.push(value)
+			}
+
+			console.log('STATE:', state)
+			buildChart()
+
+		}
+	})
+
+	function buildChart(){
+			var chartData = {
+			"type":"bar",
+			"scale-x":{
+				"values":state.items
+			},
+			"series":[
+				{
+					"values":state.values
+				}
+			]
+			}
+
+	zingchart.render({
+		id: "myChart",
+		data: chartData,
+	});
+	}
+
+</script>
 
 {% endblock %}
