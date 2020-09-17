@@ -1,0 +1,78 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% block content %}
+
+<form method="GET" action=".">
+
+    <div class="form-row">
+        <div class="form-group col-12">
+            <div class="input-group">
+                <input class="form-control py-2 border-right-0 border" type="search" name="option_type" placeholder="option_type..." />
+                <span class="input-group-append">
+                    <div class="input-group-text bg-transparent">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </span>
+            </div>
+        </div>        
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-12">
+            <div class="input-group">
+                <input class="form-control py-2 border-right-0 border" type="search" name="asset_name" placeholder="asset_name..." />
+                <span class="input-group-append">
+                    <div class="input-group-text bg-transparent">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </span>
+            </div>
+        </div>        
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-12">
+          <div class="input-group">
+              <input class="form-control py-2 border-right-0 border" type="search" name="exp_month" placeholder="exp_month..." />
+              <span class="input-group-append">
+                  <div class="input-group-text bg-transparent">
+                      <i class="fa fa-search"></i>
+                  </div>
+              </span>
+          </div>
+      </div>        
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-12">
+          <div class="input-group">
+              <input class="form-control py-2 border-right-0 border" type="search" name="exp_year" placeholder="exp_year..." />
+              <span class="input-group-append">
+                  <div class="input-group-text bg-transparent">
+                      <i class="fa fa-search"></i>
+                  </div>
+              </span>
+          </div>
+      </div>        
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+  <div class="row mx-5">
+    <ul>
+      {% if callputflag_query and asset_name_query and exp_month_query and exp_year_query %}
+        {% for option in queryset %}
+          <li>
+            {{ option.date }}
+            <a href="/option/{{option.optionsymbol}}/">{{ option.strike }}</a>
+            {{ option.expmonthyear|date:"M" }}
+            {{ option.expmonthyear|date:"Y" }}
+          </li>
+          <hr />
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+
+{% endblock content %}

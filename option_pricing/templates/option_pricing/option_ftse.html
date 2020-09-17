@@ -83,10 +83,10 @@
     <div class="row mx-5">
       <ul>
         {% if callputflag_query and exp_month_query and exp_year_query %}
-          {% for option in queryset|slice:":5"  %}
+          {% for option in queryset %}
             <li>
               {{ option.date }}
-              <a href="/optionftse/{{option.optionsymbol}}/">{{ option.strike }}</a>
+              <a href="/optionftse/{{option.optionsymbol}}/">{{ option.strike|add:"0" }}</a>
               {{ option.expmonthyear|date:"M" }}
               {{ option.expmonthyear|date:"Y" }}
             </li>

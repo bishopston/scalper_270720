@@ -10,13 +10,13 @@
         
         <div class="row mx-5">
             <ul>
-                {% for optionftse in option_ftse_strikespan|slice:":5" %}
+                {% for option in option_strikespan|slice:":5" %}
                   <li>
-                    {{ optionftse.strike|add:"0" }}
-                    {{ optionftse.date|date:"SHORT_DATE_FORMAT" }}
-                    {{ optionftse.closing_price }}
-                    {{ optionftse.expmonthyear|date:"M" }}
-                    {{ optionftse.expmonthyear|date:"Y" }}
+                    {{ option.strike|add:"0" }}
+                    {{ option.date|date:"SHORT_DATE_FORMAT" }}
+                    {{ option.closing_price }}
+                    {{ option.expmonthyear|date:"M" }}
+                    {{ option.expmonthyear|date:"Y" }}
                   </li>
                   <hr />
                 {% endfor %}
@@ -37,7 +37,7 @@ var state ={
 
 	var objId = "{{trade_symbol}}"
 
-	var dataURL = `/zingchart/bar/${objId}/`
+	var dataURL = `/zingchart3/bar/${objId}/`
 	$.ajax({
 		method:'GET',
 		url:dataURL,

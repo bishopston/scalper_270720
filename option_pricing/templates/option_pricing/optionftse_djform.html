@@ -1,0 +1,30 @@
+{%  extends 'option_pricing/main.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row" style="font-size: 0.8rem;">
+      {%crispy optionselectionform%}
+    </div>
+  </div>
+
+
+  <div class="row mx-5">
+    <ul>
+      {% if callputflag_query and exp_month_query and exp_year_query %}
+        {% for option in queryset %}
+          <li>
+            <a href="/optionftse/{{option.optionsymbol}}/">{{ option.strike|add:"0" }}</a>
+            {{ option.expmonthyear|date:"M" }}
+            {{ option.expmonthyear|date:"Y" }}
+          </li>
+          <hr />
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+
+
+{% endblock content %}
